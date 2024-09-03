@@ -11,6 +11,8 @@ export default function Home() {
 
   const [number, setNumber] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
+  const [intervalTime, setIntervalTime] = useState(4000);
+  // const [, setIntervalTime] = useState(3000)
 
   useEffect(() => {
     return () => {
@@ -33,7 +35,7 @@ export default function Home() {
         setNumber(0);
       }, 1500);
       setNumber(randomNum);
-    }, 3000);
+    }, intervalTime);
 
     setIntervalId(id);
   };
@@ -46,14 +48,31 @@ export default function Home() {
     }
   };
 
+  const decreaseInTervalTime = () => {
+    setIntervalTime((prev) => prev - 500);
+  };
+
+  const increaseInTervalTime = () => {
+    setIntervalTime((prev) => prev + 500);
+  };
+
   return (
-    <main className="w-4/5 mx-auto mt-[3rem] flex flex-col  ">
+    <main className="w-4/5 mx-auto mt-[3rem] flex flex-col item  ">
       <div className="flex justify-between">
         {options.map((option) => {
           return <Ball key={option.id} option={number} id={option.id} />;
         })}
       </div>
       {/* {number !== null && <p>Random Number: {number}</p>} */}
+      <div className="flex bg  w-1/2 mx-auto justify-between">
+        <button onClick={increaseInTervalTime} className="bg-gray-300 px-4">
+          +
+        </button>
+        <span className="mx-1">interval time:{intervalTime}</span>
+        <button onClick={decreaseInTervalTime} className="bg-gray-300 px-4">
+          -
+        </button>
+      </div>
       <button
         onClick={startGenerating}
         className="bg-gray-300 mt-7 rounded-md py-2"
